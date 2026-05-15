@@ -1,0 +1,83 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Course {
+  id        String   @id @default(cuid())
+  name      String
+  image     String   @default("") // We will add image generation later
+  createdAt DateTime @default(now())
+  updatedAt DateTime  @updatedAt
+  userId    String
+  
+  units     Unit[]
+}
+
+model Unit {
+  id       String    @id @default(cuid())
+  courseId String
+  course   Course    @relation(fields: [courseId], references: [id])
+  name     String
+  
+  chapters Chapter[]
+}
+
+model Chapter {
+  id                 String  @id @default(cuid())
+  unitId             String
+  unit               Unit    @relation(fields: [unitId], references: [id])
+  
+  name               String
+  youtubeSearchQuery String
+  videoId            String? // We will fill this from YouTube API later
+  summary            String? @db.Text
+  userProgress UserProgress[]
+  
+  studyRoom    StudyRoom?     // Fixes the relationship error
+  messages     Message[]
+}
+model UserProgress {
+  id        String   @id @default(cuid())
+  userId    String
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  
+  isCompleted Boolean @default(false)
+  score       Int?    // Stores 0-100%
+  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([userId])
+  @@unique([userId, chapterId])
+}
+model StudyRoom {
+  id        String   @id @default(cuid())
+  chapterId String   
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+  
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+
+  @@unique([chapterId]) // One active room per chapter for simplicity (or remove for multiple)
+}
+model Message {
+  id        String   @id @default(cuid())
+  text      String
+  createdAt DateTime @default(now())
+  
+  userId    String
+  userImage String?
+  userName  String?
+
+  chapterId String
+  chapter   Chapter  @relation(fields: [chapterId], references: [id])
+
+  @@index([chapterId])
+}

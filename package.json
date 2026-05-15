@@ -9,17 +9,38 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.36.3",
+    "@google/generative-ai": "^0.24.1",
+    "@liveblocks/client": "^3.12.1",
+    "@liveblocks/node": "^3.12.1",
+    "@liveblocks/react": "^3.12.1",
+    "@liveblocks/yjs": "^3.12.1",
+    "@livekit/components-react": "^2.9.17",
+    "@livekit/components-styles": "^1.2.0",
+    "@tailwindcss/typography": "^0.5.19",
+    "@tldraw/sync": "^4.2.1",
+    "axios": "^1.13.2",
+    "groq-sdk": "^0.37.0",
+    "livekit-server-sdk": "^2.15.0",
+    "lucide-react": "^0.562.0",
+    "nanoid": "^5.1.6",
     "next": "16.0.10",
     "react": "19.2.1",
-    "react-dom": "19.2.1"
+    "react-dom": "19.2.1",
+    "react-markdown": "^10.1.0",
+    "tldraw": "^4.2.1",
+    "yjs": "^13.6.28",
+    "ytsr": "^3.8.4"
   },
   "devDependencies": {
+    "@prisma/client": "^5.22.0",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "16.0.10",
+    "prisma": "^5.22.0",
     "tailwindcss": "^4",
     "typescript": "^5"
   }
